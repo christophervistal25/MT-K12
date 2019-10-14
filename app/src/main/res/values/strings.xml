@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Mother Tongue K-12 Translator</string>
+    <string name="favorites">Favorites</string>
+    <string name="translate">Translate</string>
+    <string name="btn_translate">Translate</string>
+    <string name="reset">Reset</string>
+    <string name="enter_here">Enter here...</string>
+    <string name="result_in_kamayo">Result in kamayo</string>
+    <string name="result_in_sinugbanon">Result in Sinugbuanon</string>
+    <string name="kamayo">Kamayo</string>
+    <string name="sinugbanon">Sinugbuanon</string>
+</resources>
