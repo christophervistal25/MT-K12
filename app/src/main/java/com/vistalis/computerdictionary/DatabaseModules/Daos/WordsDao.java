@@ -14,7 +14,7 @@ import java.util.List;
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         void create(Word word);
 
-        @Query("SELECT * FROM words")
+        @Query("SELECT * FROM words ORDER BY english_word")
         List<Word> getAllWords();
 
         @Query("SELECT id FROM words")
@@ -34,10 +34,5 @@ import java.util.List;
 
         @Query("SELECT COUNT(*) FROM words WHERE english_word LIKE :word  AND dialect = :dialect LIMIT 1")
         int hasPickWord(String word, int dialect);
-
-
-
-
-
 
 }

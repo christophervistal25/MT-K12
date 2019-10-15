@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.vistalis.computerdictionary.DatabaseModules.DB;
 import com.vistalis.computerdictionary.Helpers.SharedPref;
+import com.vistalis.computerdictionary.Repositories.PhraseRepository;
 import com.vistalis.computerdictionary.Repositories.WordRepository;
 
 import java.lang.ref.WeakReference;
@@ -46,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             WordRepository.insertAllWords(getApplicationContext());
+            PhraseRepository.insertAllWords(getApplicationContext());
             return null;
         }
 
