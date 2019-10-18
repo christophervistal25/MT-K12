@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.mainLayout).requestFocus();
 
-//        this.wordForToday();
+        this.wordForToday();
 
 
         this.buildRecyclerView();

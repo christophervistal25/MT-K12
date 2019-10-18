@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mother Tongue K-12 Translator</string>
+    <string name="baseUrl">http://192.168.1.3:3000</string>
     <string name="favorites">Favorites</string>
     <string name="translate">Translate</string>
     <string name="btn_translate">Translate</string>
@@ -11,4 +12,5 @@
     <string name="sinugbanon">Sinugbuanon</string>
     <string name="phrases">Phrases</string>
     <string name="words">Words</string>
+
 </resources>
