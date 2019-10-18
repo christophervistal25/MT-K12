@@ -20,10 +20,23 @@
             android:orientation="vertical">
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="From language"/>
+
             <Spinner android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:padding="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Translate into"/>
 
             <Spinner android:id="@+id/spinner2"
                 android:layout_marginBottom="20dp"
@@ -31,6 +44,13 @@
                 android:padding="20dp"
                 android:layout_height="wrap_content"/>
 
+
+            <TextView
+                android:id="@+id/inputLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                />
 
             <EditText
                 android:layout_marginBottom="20dp"
@@ -45,29 +65,12 @@
                 android:textAlignment="center"
                 />
 
-
             <TextView
+                android:id="@+id/resultLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/kamayo"/>
-
-            <TextView
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_border"
-                android:padding="20dp"
-                android:textColor="#000000"
-                android:id="@+id/kamayoResult"
-                android:hint="@string/result_in_kamayo"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:drawableLeft="@drawable/ic_translate_black_24dp"
-                android:layout_height="wrap_content"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sinugbanon"/>
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:layout_marginBottom="20dp"
@@ -75,7 +78,7 @@
                 android:padding="20dp"
                 android:textColor="#000000"
                 android:id="@+id/sinugbanonResult"
-                android:hint="@string/result_in_sinugbanon"
+                android:hint="@string/result"
                 android:drawableLeft="@drawable/ic_translate_black_24dp"
                 android:textAlignment="center"
                 android:layout_width="match_parent"

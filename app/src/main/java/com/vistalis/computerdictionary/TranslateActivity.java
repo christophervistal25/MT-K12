@@ -3,6 +3,8 @@ package com.vistalis.computerdictionary;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,9 +25,11 @@ import retrofit2.Retrofit;
 public class TranslateActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
-    private Spinner spinnerFirstLanguage;
-    private Spinner spinnerSecondLanguage;
-    private String[] languageCode = { "en", "ceb", "ceb" };
+    private Spinner fromLanguage;
+    private Spinner toLanguage;
+    private String[] languageCode = { "ceb", "eng", "ceb" };
+    private String[] fromLanguages = { "English", "Sinugbuanon" };
+    private String[] toLanguages = { "Sinugbuanon", "English" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +37,49 @@ public class TranslateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_translate);
 
         EditText inputText = findViewById(R.id.input);
-        TextView kamayoResult = findViewById(R.id.kamayoResult);
         TextView sinugbanonResult = findViewById(R.id.sinugbanonResult);
         Button btnTranslate = findViewById(R.id.btnTranslate);
         Button btnReset = findViewById(R.id.btnReset);
+        TextView inputLabel = findViewById(R.id.inputLabel);
+        TextView resultLabel = findViewById(R.id.resultLabel);
 
-        spinnerFirstLanguage = findViewById(R.id.spinner1);
-        spinnerSecondLanguage = findViewById(R.id.spinner2);
+        fromLanguage = findViewById(R.id.spinner1);
+        toLanguage = findViewById(R.id.spinner2);
 
 
         this.setSpinnerValues();
 
+        fromLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                inputLabel.setText(String.format("From %s", fromLanguages[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        toLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                resultLabel.setText(String.format("Result in %s", toLanguages[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btnReset.setOnClickListener(v -> {
             inputText.setText("");
-            kamayoResult.setText("");
             sinugbanonResult.setText("");
         });
 
         btnTranslate.setOnClickListener(v -> {
 
-            //Declare progressDialog before so we can use .hide() later!
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("LOADING . . .");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -64,7 +90,7 @@ public class TranslateActivity extends AppCompatActivity {
             SinugbuanonTranslate services    = retrofit.create(SinugbuanonTranslate.class);
             SinugbuanonRequest sinugbuanonRequest = new SinugbuanonRequest();
             sinugbuanonRequest.setWord(inputText.getText().toString());
-            sinugbuanonRequest.setLanguage(languageCode[spinnerSecondLanguage.getSelectedItemPosition()]);
+            sinugbuanonRequest.setLanguage(languageCode[toLanguage.getSelectedItemPosition()]);
 
             Call<SinugbuanonResponse> sinugbuanonResponseCall = services.translate(sinugbuanonRequest);
 
@@ -73,7 +99,6 @@ public class TranslateActivity extends AppCompatActivity {
                 public void onResponse(Call<SinugbuanonResponse> call, Response<SinugbuanonResponse> response) {
                     if  (response.code() == 200 && response.isSuccessful() ) {
                         sinugbanonResult.setText(response.body().getTranslate());
-                        kamayoResult.setText(response.body().getTranslate());
                     }
                     progressDialog.dismiss();
                 }
@@ -113,16 +138,17 @@ public class TranslateActivity extends AppCompatActivity {
     }
 
     private void setSpinnerValues() {
-        String[] langauges = { "English", "Kamayo", "Sinugbuanon" };
 
-        spinnerFirstLanguage = findViewById(R.id.spinner1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, langauges);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFirstLanguage.setAdapter(adapter);
 
-        spinnerSecondLanguage = findViewById(R.id.spinner2);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, langauges);
+        fromLanguage = findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fromLanguages);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSecondLanguage.setAdapter(adapter2);
+        fromLanguage.setAdapter(adapter);
+
+
+        toLanguage = findViewById(R.id.spinner2);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, toLanguages);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        toLanguage.setAdapter(adapter2);
     }
 }
