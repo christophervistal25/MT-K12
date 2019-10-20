@@ -27,12 +27,12 @@ public class TranslateActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Spinner fromLanguage;
     private Spinner toLanguage;
-    private String[] languageCode = { "ceb", "eng", "ceb" };
+    private String[] languageCode = { "ceb", "en", "ceb" };
     private String[] fromLanguages = { "English", "Sinugbuanon" };
     private String[] toLanguages = { "Sinugbuanon", "English" };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        @Override
+     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translate);
 
@@ -81,7 +81,7 @@ public class TranslateActivity extends AppCompatActivity {
         btnTranslate.setOnClickListener(v -> {
 
             progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("LOADING . . .");
+            progressDialog.setMessage("Translating...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.show();
 
