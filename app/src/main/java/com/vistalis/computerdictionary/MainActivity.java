@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setSharedPreferenceBoolean(this,"is_splash_open",true);
 
-        this.setActivityToFullScreen();
+//        this.setActivityToFullScreen();
 
         findViewById(R.id.mainLayout).requestFocus();
 

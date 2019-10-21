@@ -35,7 +35,7 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
         TranslationHistory translationHistory = translated.get(position);
 //        Context context = holder.txtTranslated.getContext();
         holder.txtTranslated.setText(
-                String.format("[%s] \n %s - %s",
+                String.format("[%s] \n%s - %s",
                         translationHistory.getProcess(),
                         translationHistory.getFrom_input(),
                         translationHistory.getTo_translate()
@@ -52,6 +52,7 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
 
             builder.setPositiveButton("YES", (dialog, which) -> {
                 DB.getInstance(v.getContext()).translationDao().delete(translated.get(position));
+                translated.remove(position);
                 translated = DB.getInstance(v.getContext()).translationDao().getAllTranslated();
                 notifyDataSetChanged();
             });

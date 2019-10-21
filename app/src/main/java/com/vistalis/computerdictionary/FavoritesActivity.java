@@ -27,9 +27,9 @@ public class FavoritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
-        this.setActivityToFullScreen();
+        //this.setActivityToFullScreen();
         word_list = DB.getInstance(this).wordFavoriteDao().getAllFavorites();
-        if  (word_list.size() != 0) {
+        if  (!word_list.isEmpty()) {
             this.buildRecyclerView();
         } else {
             Toast.makeText(this, "No Available data.", Toast.LENGTH_SHORT).show();

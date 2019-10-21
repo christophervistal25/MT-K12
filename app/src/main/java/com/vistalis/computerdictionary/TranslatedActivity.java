@@ -39,9 +39,16 @@ public class TranslatedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translated);
-        this.setActivityToFullScreen();
-        this.buildRecyclerView();
-        this.displayMessageDialog();
+        //this.setActivityToFullScreen();
+
+        translatedList = DB.getInstance(this).translationDao().getAllTranslated();
+        if(!translatedList.isEmpty()) {
+            this.buildRecyclerView();
+            this.displayMessageDialog();
+        } else {
+            Toast.makeText(this, "No available data.", Toast.LENGTH_SHORT).show();
+        }
+
         findViewById(R.id.translatedLayout).requestFocus();
 
         EditText searchField = findViewById(R.id.searchField);
@@ -81,31 +88,24 @@ public class TranslatedActivity extends AppCompatActivity {
 
     private void displayMessageDialog()
     {
-        // Check if first time in shared pref.
-        //if so display this message
-        //otherwise ignore.
         boolean isDisplayed = SharedPref.getSharedPreferenceBoolean(this,"is_already_displayed", false);
         if(!isDisplayed) {
             new FancyAlertDialog.Builder(this)
                     .setTitle("Message")
                     .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
                     .setMessage("If you want to delete some items just long press the translated phrase/word.")
-                    .setPositiveBtnText("")
+                    .setPositiveBtnText("OK")
+                    .setNegativeBtnText("CANCEL")
                     .setPositiveBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
-                    .setPositiveBtnText("Okay")
-                    .setNegativeBtnBackground(Color.parseColor("#FFFFFF"))  //Don't pass R.color.colorvalue
-                    .setAnimation(Animation.POP)
+                    .setAnimation(Animation.SLIDE)
                     .isCancellable(true)
                     .setIcon(R.drawable.ic_info_black_24dp, Icon.Visible)
-                    .OnNegativeClicked(() -> Toast.makeText(getApplicationContext(),"Okay",Toast.LENGTH_SHORT).show())
                     .build();
         }
         SharedPref.setSharedPreferenceBoolean(this,"is_already_displayed", true);
     }
 
     private void buildRecyclerView() {
-
-        translatedList = DB.getInstance(this).translationDao().getAllTranslated();
 
         translatedAdapter = new TranslatedAdapter(translatedList);
 
