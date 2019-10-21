@@ -92,6 +92,11 @@ public class TranslateActivity extends AppCompatActivity {
 
         btnTranslate.setOnClickListener(v -> {
 
+            if(inputText.getText().toString().isEmpty())
+            {
+                Toast.makeText(this, "Please add some value first...", Toast.LENGTH_SHORT).show();
+                return;
+            }
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Translating...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

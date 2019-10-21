@@ -76,6 +76,7 @@ public class TranslatedActivity extends AppCompatActivity {
 
     private void filter(String text) {
         ArrayList<TranslationHistory> filteredList = new ArrayList<>();
+        translatedList = DB.getInstance(getApplicationContext()).translationDao().getAllTranslated();
 
         for (TranslationHistory item : translatedList) {
             if (item.getFrom_input().toLowerCase().contains(text.toLowerCase())) {

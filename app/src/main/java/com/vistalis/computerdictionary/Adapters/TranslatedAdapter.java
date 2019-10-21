@@ -33,7 +33,6 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
     @Override
     public void onBindViewHolder(TranslatedHolder holder, int position) {
         TranslationHistory translationHistory = translated.get(position);
-//        Context context = holder.txtTranslated.getContext();
         holder.txtTranslated.setText(
                 String.format("[%s] \n%s - %s",
                         translationHistory.getProcess(),
@@ -54,7 +53,7 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
                 DB.getInstance(v.getContext()).translationDao().delete(translated.get(position));
                 translated.remove(position);
                 translated = DB.getInstance(v.getContext()).translationDao().getAllTranslated();
-                notifyDataSetChanged();
+                notifyItemRemoved(position);
             });
 
             builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
