@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vistalis.computerdictionary.DatabaseModules.DB;
 import com.vistalis.computerdictionary.DatabaseModules.Models.Phrase;
+import com.vistalis.computerdictionary.DatabaseModules.Models.Word;
 
 public class PhraseRepository {
 
@@ -201,6 +202,16 @@ public class PhraseRepository {
     {
         DB.getInstance(context).phraseDao().deleteAllWords();
         PhraseRepository.insertPharses(context);
+    }
+
+    public static Phrase pickWord(Context context, String word, int dialect)
+    {
+        return DB.getInstance(context).phraseDao().pickWordByDialect(word, dialect);
+    }
+
+    public static int availableWord(Context context, String word, int dialect)
+    {
+        return DB.getInstance(context).phraseDao().hasPickWord(word, dialect);
     }
 
 
