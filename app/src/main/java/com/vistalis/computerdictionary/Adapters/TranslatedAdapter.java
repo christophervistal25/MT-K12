@@ -1,14 +1,15 @@
 package com.vistalis.computerdictionary.Adapters;
 
 
+import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.vistalis.computerdictionary.DatabaseModules.DB;
 import com.vistalis.computerdictionary.DatabaseModules.Models.TranslationHistory;
 import com.vistalis.computerdictionary.R;
 
@@ -32,6 +33,7 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
     @Override
     public void onBindViewHolder(TranslatedHolder holder, int position) {
         TranslationHistory translationHistory = translated.get(position);
+//        Context context = holder.txtTranslated.getContext();
         holder.txtTranslated.setText(
                 String.format("[%s] \n %s - %s",
                         translationHistory.getProcess(),
@@ -41,13 +43,30 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
         );
 
 
-
         holder.txtTranslated.setOnLongClickListener(v -> {
-            Toast.makeText(holder.txtTranslated.getContext(), "Are you sure?", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+            builder.setTitle("Delete an item");
+            builder.setCancelable(false);
+            builder.setMessage("Are you sure?");
+
+            builder.setPositiveButton("YES", (dialog, which) -> {
+                DB.getInstance(v.getContext()).translationDao().delete(translated.get(position));
+                translated = DB.getInstance(v.getContext()).translationDao().getAllTranslated();
+                notifyDataSetChanged();
+            });
+
+            builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+
+            AlertDialog alert = builder.create();
+            alert.show();
+
             return true;
         });
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -65,6 +84,7 @@ public class TranslatedAdapter extends RecyclerView.Adapter<TranslatedAdapter.Tr
 
         public TranslatedHolder(View itemView) {
             super(itemView);
+
             txtTranslated = itemView.findViewById(R.id.translated);
 //            btnFavorite = itemView.findViewById(R.id.btnFavorite);
 
