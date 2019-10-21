@@ -39,6 +39,9 @@ public class TranslatedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translated);
+        EditText searchField = findViewById(R.id.searchField);
+        findViewById(R.id.translatedLayout).requestFocus();
+
         //this.setActivityToFullScreen();
 
         translatedList = DB.getInstance(this).translationDao().getAllTranslated();
@@ -46,12 +49,10 @@ public class TranslatedActivity extends AppCompatActivity {
             this.buildRecyclerView();
             this.displayMessageDialog();
         } else {
+            searchField.setVisibility(View.GONE);
             findViewById(R.id.noAvailableData).setVisibility(View.VISIBLE);
         }
 
-        findViewById(R.id.translatedLayout).requestFocus();
-
-        EditText searchField = findViewById(R.id.searchField);
 
         searchField.addTextChangedListener(new TextWatcher() {
             @Override
