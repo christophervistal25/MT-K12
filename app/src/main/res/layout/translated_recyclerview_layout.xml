@@ -10,7 +10,7 @@
                <TextView
                    android:gravity="center_vertical"
                    android:layout_alignParentStart="true"
-                   android:id="@+id/word"
+                   android:id="@+id/translated"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginBottom="20dp"
@@ -19,6 +19,5 @@
                    android:background="@drawable/btn_border"
                    android:layout_marginTop="2dp"
                    android:textStyle="bold" />
-
 
 </RelativeLayout>

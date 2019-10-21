@@ -7,7 +7,7 @@ import com.vistalis.computerdictionary.DatabaseModules.Models.Word;
 
 public class WordRepository {
 
-    private static void create(Context context, String word, String translation, int dialect)
+    public static void create(Context context, String word, String translation, int dialect)
     {
         Word wordModel = new Word(word,translation, dialect);
         DB.getInstance(context).wordsDao().create(wordModel);
@@ -411,7 +411,7 @@ public class WordRepository {
         WordRepository.create(context,"step backward", "atras",1);
         WordRepository.create(context,"march", "martsa",1);
         WordRepository.create(context,"hop", "ugpo",1);
-        WordRepository.create(context,"about face", "atubang sa likod",1);
+//        WordRepository.create(context,"about face", "atubang sa likod",1);
         WordRepository.create(context,"dance", "sayaw",1);
         WordRepository.create(context,"body", "lawas",1);
         WordRepository.create(context,"exercise", "ehersisyo",1);
@@ -558,14 +558,14 @@ public class WordRepository {
         WordRepository.create(context,"small child", "isu",1);
         WordRepository.create(context,"young woman", "daraga",1);
         WordRepository.create(context,"young man", "ulitawo",1);
-        WordRepository.create(context,"aunt (motherƒ's side)", "tiya",1);
-        WordRepository.create(context,"aunt (fatherƒ's side)", "tiya",1);
-        WordRepository.create(context,"uncle (motherƒ's side)", "tiyo",1);
-        WordRepository.create(context,"uncle (fatherƒ's side)", "tiyo",1);
+        WordRepository.create(context,"aunt (mother's side)", "tiya",1);
+        WordRepository.create(context,"aunt (father's side)", "tiya",1);
+        WordRepository.create(context,"uncle (mother's side)", "tiyo",1);
+        WordRepository.create(context,"uncle (father's side)", "tiyo",1);
         WordRepository.create(context,"grandmother (mother's side)", "ompo",1);
-        WordRepository.create(context,"grandmother (fatherƒ's side)", "ompo",1);
-        WordRepository.create(context,"grandfather (motherƒ's side)", "ompo",1);
-        WordRepository.create(context,"grandfather (fatherƒ's side)", "ompo",1);
+        WordRepository.create(context,"grandmother (father's side)", "ompo",1);
+        WordRepository.create(context,"grandfather (mother's side)", "ompo",1);
+        WordRepository.create(context,"grandfather (father's side)", "ompo",1);
         WordRepository.create(context,"sister-in-law", "bayaw",1);
         WordRepository.create(context,"brother-in-law", "bayaw",1);
         WordRepository.create(context,"mother-in-law", "ugangan na bobay",1);
@@ -588,7 +588,7 @@ public class WordRepository {
         WordRepository.create(context,"diarrhea", "ipalintawon",1);
         WordRepository.create(context,"flower", "burak",1);
         WordRepository.create(context,"sky/heaven", "kalangitan",1);
-        WordRepository.create(context,"birdƒ's wing", "paku ng langgam",1);
+        WordRepository.create(context,"bird's wing", "paku ng langgam",1);
         WordRepository.create(context,"rice", "kan-on",1);
         WordRepository.create(context,"rat", "ambaw",1);
         WordRepository.create(context,"frog", "palaka",1);
@@ -797,7 +797,7 @@ public class WordRepository {
         WordRepository.create(context,"charcoal", "oring",1);
         WordRepository.create(context,"grandfather", "ompu",1);
         WordRepository.create(context,"owl", "okang",1);
-        WordRepository.create(context," sour fruit", "owabana",1);
+        WordRepository.create(context,"sour fruit", "owabana",1);
         WordRepository.create(context,"tooth", "unto",1);
         WordRepository.create(context,"move", "uson",1);
         WordRepository.create(context,"rain", "uran",1);
@@ -1182,10 +1182,10 @@ public class WordRepository {
         WordRepository.create(context,"forty-one", "kwarentay uno",1);
         WordRepository.create(context,"forty-two", "kwarentay dos",1);
         WordRepository.create(context,"forty-three", "kwarentay tres",1);
-        WordRepository.create(context,"forty=four", "kwarentay kwatro",1);
+        WordRepository.create(context,"forty-four", "kwarentay kwatro",1);
         WordRepository.create(context,"forty-five", "kwarentay singko",1);
         WordRepository.create(context,"forty-six", "kwarentay says",1);
-        WordRepository.create(context,"-forty seven", "kwarentay syete",1);
+        WordRepository.create(context,"forty-seven", "kwarentay syete",1);
         WordRepository.create(context,"forty-eight", "kwarentay otso",1);
         WordRepository.create(context,"forty-nine", "kwarentay nuybe",1);
         WordRepository.create(context,"fifty", "singkwenta",1);
@@ -1234,7 +1234,7 @@ public class WordRepository {
         WordRepository.create(context,"ninety-two", "nubentay dos",1);
         WordRepository.create(context,"ninety-three", "nubentay tres",1);
         WordRepository.create(context,"ninety-four", "nubentay kwatro",1);
-        WordRepository.create(context," ninety-five", "nubentay singko",1);
+        WordRepository.create(context,"ninety-five", "nubentay singko",1);
         WordRepository.create(context,"ninety six", "nubentay-says",1);
         WordRepository.create(context,"ninety-seven", "nubentay site",1);
         WordRepository.create(context,"ninety-eight", "nubentay otso",1);

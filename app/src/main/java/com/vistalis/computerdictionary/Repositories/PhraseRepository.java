@@ -8,7 +8,7 @@ import com.vistalis.computerdictionary.DatabaseModules.Models.Word;
 
 public class PhraseRepository {
 
-    private static void create(Context context, String word, String translation, int dialect)
+    public static void create(Context context, String word, String translation, int dialect)
     {
         Phrase phraseModel = new Phrase(word,translation, dialect);
         DB.getInstance(context).phraseDao().create(phraseModel);

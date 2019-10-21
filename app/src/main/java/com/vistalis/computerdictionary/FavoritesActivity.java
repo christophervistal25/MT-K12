@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.vistalis.computerdictionary.Adapters.WordsFavoriteAdapter;
 import com.vistalis.computerdictionary.DatabaseModules.DB;
@@ -27,12 +28,18 @@ public class FavoritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
         this.setActivityToFullScreen();
-        this.buildRecyclerView();
+        word_list = DB.getInstance(this).wordFavoriteDao().getAllFavorites();
+        if  (word_list.size() != 0) {
+            this.buildRecyclerView();
+        } else {
+            Toast.makeText(this, "No Available data.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void buildRecyclerView() {
 
-        word_list = DB.getInstance(this).wordFavoriteDao().getAllFavorites();
+//        word_list = DB.getInstance(this).wordFavoriteDao().getAllFavorites();
 
         wordsFavoriteAdapter = new WordsFavoriteAdapter(word_list);
 

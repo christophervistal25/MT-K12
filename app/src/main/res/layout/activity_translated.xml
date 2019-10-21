@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/translatedLayout"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="#fff"
+    tools:context=".TranslatedActivity">
+
+    <EditText
+        android:id="@+id/searchField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF000000"
+        android:hint="Search..."
+        android:textColorHint="#FF000000"
+        android:background="#fff"
+        android:padding="5dp"
+        android:layout_margin="16dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/searchField"
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"/>
+
+
+</RelativeLayout>

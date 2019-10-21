@@ -6,7 +6,6 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.vistalis.computerdictionary.DatabaseModules.Models.Phrase;
-import com.vistalis.computerdictionary.DatabaseModules.Models.Word;
 
 import java.util.List;
 

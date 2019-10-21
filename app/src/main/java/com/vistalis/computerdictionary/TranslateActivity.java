@@ -1,6 +1,7 @@
 package com.vistalis.computerdictionary;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,9 @@ import com.vistalis.computerdictionary.API.SinugbuanonTranslate;
 import com.vistalis.computerdictionary.Modules.Models.SinugbuanonRequest;
 import com.vistalis.computerdictionary.Modules.Models.SinugbuanonResponse;
 import com.vistalis.computerdictionary.Modules.Service;
+import com.vistalis.computerdictionary.Repositories.PhraseRepository;
+import com.vistalis.computerdictionary.Repositories.TranslationHistoryRepository;
+import com.vistalis.computerdictionary.Repositories.WordRepository;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,20 +32,21 @@ public class TranslateActivity extends AppCompatActivity {
     private Spinner fromLanguage;
     private Spinner toLanguage;
     private String[] languageCode = { "ceb", "en", "ceb" };
-    private String[] fromLanguages = { "English", "Sinugbuanon" };
-    private String[] toLanguages = { "Sinugbuanon", "English" };
+    private String[] fromLanguages = { "English", "Sinugbuanon", "Kamayo" };
+    private String[] toLanguages = { "Sinugbuanon", "English", "Kamayo" };
 
-        @Override
+     @Override
      protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translate);
 
         EditText inputText = findViewById(R.id.input);
-        TextView sinugbanonResult = findViewById(R.id.sinugbanonResult);
+        TextView output = findViewById(R.id.sinugbanonResult);
         Button btnTranslate = findViewById(R.id.btnTranslate);
         Button btnReset = findViewById(R.id.btnReset);
         TextView inputLabel = findViewById(R.id.inputLabel);
         TextView resultLabel = findViewById(R.id.resultLabel);
+        TextView viewAllTranslated = findViewById(R.id.viewTranslated);
 
         fromLanguage = findViewById(R.id.spinner1);
         toLanguage = findViewById(R.id.spinner2);
@@ -73,9 +78,16 @@ public class TranslateActivity extends AppCompatActivity {
             }
         });
 
+
+
+        viewAllTranslated.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TranslatedActivity.class);
+            startActivity(intent);
+        });
+
         btnReset.setOnClickListener(v -> {
             inputText.setText("");
-            sinugbanonResult.setText("");
+            output.setText("");
         });
 
         btnTranslate.setOnClickListener(v -> {
@@ -98,7 +110,15 @@ public class TranslateActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<SinugbuanonResponse> call, Response<SinugbuanonResponse> response) {
                     if  (response.code() == 200 && response.isSuccessful() ) {
-                        sinugbanonResult.setText(response.body().getTranslate());
+                        String result = response.body().getTranslate();
+                        output.setText(result);
+
+                        TranslationHistoryRepository.create(
+                                getApplicationContext(),
+                                inputText.getText().toString(), result,
+                                fromLanguage.getSelectedItem() + " - " + toLanguage.getSelectedItem()
+                        );
+
                     }
                     progressDialog.dismiss();
                 }
@@ -124,12 +144,12 @@ public class TranslateActivity extends AppCompatActivity {
             if(WordRepository.availableWord(this, inputText.getText().toString(), 2) != 0) {
                 Word sinugbanon = WordRepository.pickWord(this, inputText.getText().toString(), 2);
 
-                sinugbanonResult.setText(sinugbanon.getTranslation());
-                sinugbanonResult.setTextColor(Color.parseColor("black"));
+                output.setText(sinugbanon.getTranslation());
+                output.setTextColor(Color.parseColor("black"));
             } else {
                 // Insertion for cebuano word that not exists.
-                sinugbanonResult.setTextColor(Color.parseColor("red"));
-                sinugbanonResult.setText("Problem occur while translating your input.");
+                output.setTextColor(Color.parseColor("red"));
+                output.setText("Problem occur while translating your input.");
             }
 */
 
@@ -137,9 +157,25 @@ public class TranslateActivity extends AppCompatActivity {
 
     }
 
+    private void wantToAddInList(String result) {
+        if (isPhrase(result)) {
+            // Check if exists.
+            PhraseRepository.create(getApplicationContext(),"","",2);
+        } else {
+            // Check if exists.
+            WordRepository.create(getApplicationContext(),"","",1);
+        }
+    }
+
+
+    public boolean isPhrase(String string)
+    {
+        String[] words = string.split("\\s+");
+        return words.length != 1;
+    }
+
+
     private void setSpinnerValues() {
-
-
         fromLanguage = findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fromLanguages);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

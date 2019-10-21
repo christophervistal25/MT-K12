@@ -44,10 +44,6 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseHold
 
 
 
-        holder.btnFavorite.setOnClickListener(v -> {
-
-        });
-
 
         holder.word.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -69,14 +65,10 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseHold
 
     class PhraseHolder extends RecyclerView.ViewHolder {
         TextView word;
-        ImageButton btnFavorite;
 
         public PhraseHolder(View itemView) {
             super(itemView);
-
             word = itemView.findViewById(R.id.word);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
-
         }
     }
 }
