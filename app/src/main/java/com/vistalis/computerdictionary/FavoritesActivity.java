@@ -32,7 +32,7 @@ public class FavoritesActivity extends AppCompatActivity {
         if  (!word_list.isEmpty()) {
             this.buildRecyclerView();
         } else {
-            Toast.makeText(this, "No Available data.", Toast.LENGTH_SHORT).show();
+            findViewById(R.id.noAvailableData).setVisibility(View.VISIBLE);
         }
 
     }

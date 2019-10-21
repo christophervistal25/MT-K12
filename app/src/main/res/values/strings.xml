@@ -5,7 +5,7 @@
     <string name="translate">Translate</string>
     <string name="btn_translate">Translate</string>
     <string name="reset">Reset</string>
-    <string name="enter_here">Enter here...</string>
+    <string name="enter_here">Enter here…</string>
     <string name="result_in_kamayo">Result in kamayo</string>
     <string name="result">Result</string>
     <string name="kamayo">Kamayo</string>
@@ -13,5 +13,6 @@
     <string name="phrases">Phrases</string>
     <string name="words">Words</string>
     <string name="view_translation_history">View Translation History</string>
+    <string name="no_available_data">NO DATA AVAILABLE</string>
 
 </resources>

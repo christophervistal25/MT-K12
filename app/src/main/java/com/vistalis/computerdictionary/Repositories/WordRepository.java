@@ -1355,7 +1355,6 @@ public class WordRepository {
 
     private static void insertCebuanoWords2(Context context)
     {
-        WordRepository.create(context,"a", "a",2);
         WordRepository.create(context,"abandon", "gipasagdan",2);
         WordRepository.create(context,"ability", "abilidad",2);
         WordRepository.create(context,"able", "makahimo",2);

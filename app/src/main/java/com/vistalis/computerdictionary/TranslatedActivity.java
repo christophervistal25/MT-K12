@@ -46,7 +46,7 @@ public class TranslatedActivity extends AppCompatActivity {
             this.buildRecyclerView();
             this.displayMessageDialog();
         } else {
-            Toast.makeText(this, "No available data.", Toast.LENGTH_SHORT).show();
+            findViewById(R.id.noAvailableData).setVisibility(View.VISIBLE);
         }
 
         findViewById(R.id.translatedLayout).requestFocus();
