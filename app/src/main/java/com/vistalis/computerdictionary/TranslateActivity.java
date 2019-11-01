@@ -111,7 +111,8 @@ public class TranslateActivity extends AppCompatActivity {
                 KamayoTranslate services    = retrofit.create(KamayoTranslate.class);
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put("sentence", inputText.getText().toString());
+
+                data.put("sentence", inputText.getText().toString().replaceAll("[^a-zA-Z0-9\\s]",""));
                 data.put("target_lang", toLanguages[toLanguage.getSelectedItemPosition()].toLowerCase());
 
                 Call<KamayoResponse> kamayoResponseCall = services.translate(data);
