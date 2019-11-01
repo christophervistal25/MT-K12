@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Mother Tongue K-12 Translator</string>
     <string name="baseUrl">http://mt-app-api.herokuapp.com/</string>
+    <string name="kamayoBaseUrl">http://192.168.1.8:5000/</string>
     <string name="favorites">Favorites</string>
     <string name="translate">Translate</string>
     <string name="btn_translate">Translate</string>

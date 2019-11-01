@@ -13,13 +13,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vistalis.computerdictionary.API.KamayoTranslate;
 import com.vistalis.computerdictionary.API.SinugbuanonTranslate;
+import com.vistalis.computerdictionary.Modules.KamayoService;
+import com.vistalis.computerdictionary.Modules.Models.KamayoResponse;
 import com.vistalis.computerdictionary.Modules.Models.SinugbuanonRequest;
 import com.vistalis.computerdictionary.Modules.Models.SinugbuanonResponse;
 import com.vistalis.computerdictionary.Modules.Service;
-import com.vistalis.computerdictionary.Repositories.PhraseRepository;
 import com.vistalis.computerdictionary.Repositories.TranslationHistoryRepository;
-import com.vistalis.computerdictionary.Repositories.WordRepository;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,92 +95,97 @@ public class TranslateActivity extends AppCompatActivity {
 
         btnTranslate.setOnClickListener(v -> {
 
-            if(inputText.getText().toString().isEmpty())
-            {
-                Toast.makeText(this, "Please add some value first...", Toast.LENGTH_SHORT).show();
+            if (inputText.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please add some word/phrase that you want to be translated.", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Translating...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.show();
 
 
-            Retrofit retrofit        = Service.RetrofitInstance(getApplicationContext());
-            SinugbuanonTranslate services    = retrofit.create(SinugbuanonTranslate.class);
-            SinugbuanonRequest sinugbuanonRequest = new SinugbuanonRequest();
-            sinugbuanonRequest.setWord(inputText.getText().toString());
-            sinugbuanonRequest.setLanguage(languageCode[toLanguage.getSelectedItemPosition()]);
+            if (this.isUserWantKamayo()) {
+                Retrofit retrofit        = KamayoService.RetrofitInstance(getApplicationContext());
+                KamayoTranslate services    = retrofit.create(KamayoTranslate.class);
 
-            Call<SinugbuanonResponse> sinugbuanonResponseCall = services.translate(sinugbuanonRequest);
+                HashMap<String, String> data = new HashMap<>();
+                data.put("sentence", inputText.getText().toString());
+                data.put("target_lang", toLanguages[toLanguage.getSelectedItemPosition()].toLowerCase());
 
-            sinugbuanonResponseCall.enqueue(new Callback<SinugbuanonResponse>() {
-                @Override
-                public void onResponse(Call<SinugbuanonResponse> call, Response<SinugbuanonResponse> response) {
-                    if  (response.code() == 200 && response.isSuccessful() ) {
-                        String result = response.body().getTranslate();
-                        output.setText(result);
+                Call<KamayoResponse> kamayoResponseCall = services.translate(data);
 
-                        TranslationHistoryRepository.create(
-                                getApplicationContext(),
-                                inputText.getText().toString(), result,
-                                fromLanguage.getSelectedItem() + " - " + toLanguage.getSelectedItem()
-                        );
+                kamayoResponseCall.enqueue(new Callback<KamayoResponse>() {
+                    @Override
+                    public void onResponse(Call<KamayoResponse> call, Response<KamayoResponse> response) {
+                        if  (response.code() == 200 && response.isSuccessful() ) {
+                            String result = response.body().getTranslated();
+                            output.setText(result);
 
+                            TranslationHistoryRepository.create(
+                                    getApplicationContext(),
+                                    inputText.getText().toString(), result,
+                                    fromLanguage.getSelectedItem() + " - " + toLanguage.getSelectedItem()
+                            );
+
+                        }
+                        progressDialog.dismiss();
                     }
-                    progressDialog.dismiss();
-                }
 
-                @Override
-                public void onFailure(Call<SinugbuanonResponse> call, Throwable t) {
-                    progressDialog.dismiss();
-                    Toast.makeText(TranslateActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<KamayoResponse> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(TranslateActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
-           /* if  (WordRepository.availableWord(this, inputText.getText().toString(), 1) != 0) {
-                Word kamayo = WordRepository.pickWord(this, inputText.getText().toString(), 1);
-                kamayoResult.setText(kamayo.getTranslation());
-                kamayoResult.setTextColor(Color.parseColor("black"));
             } else {
-                // Insertion for kamayo word that not exists.
-                kamayoResult.setTextColor(Color.parseColor("red"));
-                kamayoResult.setText("Problem occur while translating your input.");
-            }
+                Retrofit retrofit        = Service.RetrofitInstance(getApplicationContext());
+                SinugbuanonTranslate services    = retrofit.create(SinugbuanonTranslate.class);
+                SinugbuanonRequest sinugbuanonRequest = new SinugbuanonRequest();
+                sinugbuanonRequest.setWord(inputText.getText().toString());
+                sinugbuanonRequest.setLanguage(languageCode[toLanguage.getSelectedItemPosition()]);
 
-            if(WordRepository.availableWord(this, inputText.getText().toString(), 2) != 0) {
-                Word sinugbanon = WordRepository.pickWord(this, inputText.getText().toString(), 2);
+                Call<SinugbuanonResponse> sinugbuanonResponseCall = services.translate(sinugbuanonRequest);
 
-                output.setText(sinugbanon.getTranslation());
-                output.setTextColor(Color.parseColor("black"));
-            } else {
-                // Insertion for cebuano word that not exists.
-                output.setTextColor(Color.parseColor("red"));
-                output.setText("Problem occur while translating your input.");
+                sinugbuanonResponseCall.enqueue(new Callback<SinugbuanonResponse>() {
+                    @Override
+                    public void onResponse(Call<SinugbuanonResponse> call, Response<SinugbuanonResponse> response) {
+                        if  (response.code() == 200 && response.isSuccessful() ) {
+                            String result = response.body().getTranslate();
+                            output.setText(result);
+
+                            TranslationHistoryRepository.create(
+                                    getApplicationContext(),
+                                    inputText.getText().toString(), result,
+                                    fromLanguage.getSelectedItem() + " - " + toLanguage.getSelectedItem()
+                            );
+
+                        }
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<SinugbuanonResponse> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(TranslateActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
-*/
 
         });
 
-    }
+     }
 
-    private void wantToAddInList(String result) {
-        if (isPhrase(result)) {
-            // Check if exists.
-            PhraseRepository.create(getApplicationContext(),"","",2);
-        } else {
-            // Check if exists.
-            WordRepository.create(getApplicationContext(),"","",1);
-        }
-    }
+     private boolean isUserWantKamayo()
+     {
+         return fromLanguages[fromLanguage.getSelectedItemPosition()].toLowerCase().equals("kamayo")
+                 || toLanguages[toLanguage.getSelectedItemPosition()].toLowerCase().equals("kamayo");
+     }
 
-
-    public boolean isPhrase(String string)
-    {
-        String[] words = string.split("\\s+");
-        return words.length != 1;
-    }
 
 
     private void setSpinnerValues() {

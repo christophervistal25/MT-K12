@@ -6,14 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.vistalis.computerdictionary.DatabaseModules.DB;
 import com.vistalis.computerdictionary.DatabaseModules.Models.Phrase;
-import com.vistalis.computerdictionary.DatabaseModules.Models.Word;
-import com.vistalis.computerdictionary.DatabaseModules.Models.WordFavorite;
 import com.vistalis.computerdictionary.R;
 
 import java.util.ArrayList;
